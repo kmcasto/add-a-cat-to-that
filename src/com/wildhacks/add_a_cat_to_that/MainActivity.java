@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -74,8 +75,8 @@ public class MainActivity extends Activity {
 	            ContentResolver cr = getContentResolver();
 	            Bitmap bitmap;
 	            try {
-	                 bitmap = android.provider.MediaStore.Images.Media
-	                 .getBitmap(cr, selectedImage);
+	                bitmap = android.provider.MediaStore.Images.Media.getBitmap(cr, selectedImage);
+	                bitmap = getResizedBitmap(bitmap, 500, 500);
 
 	                imageView.setImageBitmap(bitmap);
 	                Toast.makeText(this, selectedImage.toString(),
@@ -87,5 +88,20 @@ public class MainActivity extends Activity {
 	            }
 	        }
 	    }
+	}
+	
+	public Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
+	    int width = bm.getWidth();
+	    int height = bm.getHeight();
+	    float scaleWidth = ((float) newWidth) / width;
+	    float scaleHeight = ((float) newHeight) / height;
+	    // CREATE A MATRIX FOR THE MANIPULATION
+	    Matrix matrix = new Matrix();
+	    // RESIZE THE BIT MAP
+	    matrix.postScale(scaleWidth, scaleHeight);
+
+	    // "RECREATE" THE NEW BITMAP
+	    Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+	    return resizedBitmap;
 	}
 }
