@@ -99,7 +99,7 @@ public class MainActivity extends Activity {
 					ArrayList<Face> hFaces = HumanFace.getFaces(bitmap);
 					
 					
-					boolean lotsOfCats=false;
+					boolean lotsOfCats=true;
 					boolean hasBeard=true;
 					boolean hasHalo=false;
 					boolean hasCage=true;
@@ -114,7 +114,7 @@ public class MainActivity extends Activity {
 						if(hasCage){
 							bitmap = buildCage(bitmap, (int)p.x,(int)p.y,hFaces.get(i).eyesDistance());
 						}
-						bitmap = buildKitties(bitmap, (int)p.x,(int)p.y , (int)(1.7*hFaces.get(i).eyesDistance()) ,53, lotsOfCats ,hasBeard, hasHalo);
+						bitmap = buildKitties(bitmap, (int)p.x,(int)p.y , (int)(1.7*hFaces.get(i).eyesDistance()) ,35, lotsOfCats ,hasBeard, hasHalo);
 					}
 					
 					//bitmap = buildKitties(bitmap, (int)p.x,(int)p.y ,150, 25);
@@ -246,7 +246,8 @@ public class MainActivity extends Activity {
 		int angle_offset = Math.round((float)360/num);
 		
 		if(hasBeard){
-			for(int i = Math.round((float)num/1.6f); i < num; i+=1.333) {
+			
+			for(int i = (int) (num/1.6f)+1; i < num; i+=1.7) {
 				System.out.println("new cat");
 				Matrix mat2 = new Matrix();
 				int x = (int) Math.round(radius*.7 * Math.cos(Math.toRadians(angle_offset * i-190))) + w-(overlay.getWidth()/2);
@@ -260,17 +261,18 @@ public class MainActivity extends Activity {
 						kitties[random.nextInt(kitties.length - 1)]);	
 				}
 				overlay = getResizedBitmap(overlay, (int)(radius/2.5));
-				bm = compositeBitmap(bm, overlay, mat2);	
+				bm = compositeBitmap(bm, overlay, mat2);
+				//bitmap.flush();
 			}
 		}
 		
 		
 		if(hasHalo){
-			for(int i = 0; i < num; i+=2*3.14/num) {
+			for(int i = 0; i < num; i++) {
 				System.out.println("new cat");
 				Matrix mat2 = new Matrix();
-				int x = (int) Math.round(radius* Math.cos(Math.toRadians(angle_offset * i-190))) + w-(overlay.getWidth()/2);
-				int y = (int) Math.round(radius* Math.sin(Math.toRadians(angle_offset * i-190))) + h-(overlay.getHeight()/2);
+				int x = (int) Math.round(radius* Math.cos(Math.toRadians(angle_offset * i-90))) + w-(overlay.getWidth()/2);
+				int y = (int) Math.round(radius* Math.sin(Math.toRadians(angle_offset * i-90))) + h-(overlay.getHeight()/2);
 				mat2.postTranslate(x,y);
 				if(!lotsOfCats){
 					overlay = BitmapFactory.decodeResource(this.getResources(),
