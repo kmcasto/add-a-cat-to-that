@@ -87,6 +87,7 @@ public class MainActivity extends Activity {
 				ImageView imageView = (ImageView) findViewById(R.id.imageReturn);
 				ContentResolver cr = getContentResolver();
 				Bitmap bitmap;
+				Bitmap cage;
 				try {
 					System.out.println("build image");
 					bitmap = android.provider.MediaStore.Images.Media
@@ -102,8 +103,10 @@ public class MainActivity extends Activity {
 					System.out.println("point " + p.x + "," + p.y);
 					for(int i = 0; i < hFaces.size(); i++) {
 						hFaces.get(i).getMidPoint(p);
-						bitmap = buildKitties(bitmap, (int)p.x,(int)p.y ,150, 70);				
+						//bitmap = buildCage(bitmap, (int)p.x,(int)p.y,hFaces.get(i).eyesDistance());
+						bitmap = buildKitties(bitmap, (int)p.x,(int)p.y , (int)(1.7*hFaces.get(i).eyesDistance()) ,70);
 					}
+					
 					//bitmap = buildKitties(bitmap, (int)p.x,(int)p.y ,150, 25);
 					/*
 					Bitmap overlay = BitmapFactory.decodeResource(this.getResources(),
@@ -115,7 +118,7 @@ public class MainActivity extends Activity {
 					/*
 					Bitmap test = BitmapFactory.decodeResource(this.getResources(),
                             R.drawable.doug_small);
-					ArrayList<Face> faceList = HumanFace.getFace(test);
+					ArrayList<Face> faceList = HumanFace.getFace(t est);
 					System.out.println("Facelist " + faceList.size());
 					*/
 					//faceList.get(0).
@@ -138,6 +141,7 @@ public class MainActivity extends Activity {
 		}
 	}
 
+	
 	public Bitmap getResizedBitmap(Bitmap bm, int newWidth) {
 		int width = bm.getWidth();
 		int height = bm.getHeight();
@@ -163,6 +167,50 @@ public class MainActivity extends Activity {
 		canvas.drawBitmap(tempBitmap, new Matrix(), null);
 		canvas.drawBitmap(overlay, m, null);
 		return finalBitmap;
+	}
+	
+	public Bitmap buildCage(Bitmap bm, int w, int h, float e) {
+		int kitties[] = primeKitties();
+		
+		//Random random = new Random(System.currentTimeMillis());
+		
+		Matrix matrix = new Matrix();
+		// Move the matrix to the middle
+		matrix.postTranslate(h, w);
+		
+		Bitmap overlay = BitmapFactory.decodeResource(this.getResources(),
+                R.drawable.cage2);
+		
+		
+		//PointF p = new PointF();
+		//ArrayList<Face> hFaces = HumanFace.getFaces(overlay);
+		//hFaces.get(0).getMidPoint(p);
+		
+		System.out.print("e " + e);
+		//overlay = getResizedBitmap(overlay, (int)(1.1*e/hFaces.get(0).eyesDistance()));
+		overlay = getResizedBitmap(overlay, (int)(3.2*(int)e));
+		
+		//Matrix mat = new Matrix();
+		//mat.postTranslate(w-(overlay.getWidth()/2),h-(overlay.getHeight()/2));			
+		//bm = compositeBitmap(bm, overlay, mat);	
+		
+		System.out.println("new cage");
+		Matrix mat2 = new Matrix();
+		int x =  w-(overlay.getWidth()/2);
+		int y =  h-(overlay.getHeight()/2);
+		mat2.postTranslate(x,y);
+		//mat2.setScale(1, );
+		//overlay = BitmapFactory.decodeResource(this.getResources(),
+				//kitties[kitties.length - 1]);
+		//overlay = getResizedBitmap(overlay, 75);
+		//overlay = Bitmap.createScaledBitmap(overlay, w, h, true);
+		bm = compositeBitmap(bm, overlay, mat2);	
+		
+		
+		//$y = round($r * cos(deg2rad($angle_offset * $count - 90)) + $r*3, 3);
+		//$x = round($r * sin(deg2rad($angle_offset * $count - 90)) + $r*3, 3);
+		
+		return bm;
 	}
 	
 	// eheheheh
@@ -191,7 +239,7 @@ public class MainActivity extends Activity {
 			mat2.postTranslate(x,y);			
 			overlay = BitmapFactory.decodeResource(this.getResources(),
 					kitties[random.nextInt(kitties.length - 1)]);
-			overlay = getResizedBitmap(overlay, 75);
+			overlay = getResizedBitmap(overlay, radius/3);
 			bm = compositeBitmap(bm, overlay, mat2);	
 		}
 		
