@@ -274,7 +274,7 @@ public class MainActivity extends Activity {
 					overlay = BitmapFactory.decodeResource(this.getResources(),
 						kitties[random.nextInt(kitties.length - 1)]);	
 				}
-				overlay = getResizedBitmap(overlay, (int)(radius/2.5));
+				overlay = getResizedBitmap(overlay, (int)(radius/1.9));
 				bm = compositeBitmap(bm, overlay, mat2);
 				//bitmap.flush();
 			}
@@ -295,7 +295,7 @@ public class MainActivity extends Activity {
 					overlay = BitmapFactory.decodeResource(this.getResources(),
 						kitties[random.nextInt(kitties.length - 1)]);	
 				}
-				overlay = getResizedBitmap(overlay, (int)(radius/2.5));
+				overlay = getResizedBitmap(overlay, (int)(radius/1.9));
 				bm = compositeBitmap(bm, overlay, mat2);
 			}
 		}
