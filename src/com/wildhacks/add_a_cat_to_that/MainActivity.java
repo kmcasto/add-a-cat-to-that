@@ -98,13 +98,23 @@ public class MainActivity extends Activity {
 					
 					ArrayList<Face> hFaces = HumanFace.getFaces(bitmap);
 					
+					
+					boolean lotsOfCats=false;
+					boolean hasBeard=true;
+					boolean hasHalo=false;
+					boolean hasCage=true;
+					
+					
+					
 					System.out.println("num faces " + hFaces.size());
 					PointF p = new PointF();
 					System.out.println("point " + p.x + "," + p.y);
 					for(int i = 0; i < hFaces.size(); i++) {
 						hFaces.get(i).getMidPoint(p);
-						//bitmap = buildCage(bitmap, (int)p.x,(int)p.y,hFaces.get(i).eyesDistance());
-						bitmap = buildKitties(bitmap, (int)p.x,(int)p.y , (int)(1.7*hFaces.get(i).eyesDistance()) ,70);
+						if(hasCage){
+							bitmap = buildCage(bitmap, (int)p.x,(int)p.y,hFaces.get(i).eyesDistance());
+						}
+						bitmap = buildKitties(bitmap, (int)p.x,(int)p.y , (int)(1.7*hFaces.get(i).eyesDistance()) ,53, lotsOfCats ,hasBeard, hasHalo);
 					}
 					
 					//bitmap = buildKitties(bitmap, (int)p.x,(int)p.y ,150, 25);
@@ -214,7 +224,7 @@ public class MainActivity extends Activity {
 	}
 	
 	// eheheheh
-	public Bitmap buildKitties(Bitmap bm, int w, int h, int radius, int num) {
+	public Bitmap buildKitties(Bitmap bm, int w, int h, int radius, int num, boolean lotsOfCats, boolean hasBeard, boolean hasHalo) {
 		int kitties[] = primeKitties();
 		
 		Random random = new Random(System.currentTimeMillis());
@@ -224,23 +234,54 @@ public class MainActivity extends Activity {
 		matrix.postTranslate(h, w);
 		
 		Bitmap overlay = BitmapFactory.decodeResource(this.getResources(),
-                R.drawable.c17);
+                R.drawable.empty);
 		overlay = getResizedBitmap(overlay, 75);
 		//Matrix mat = new Matrix();
 		//mat.postTranslate(w-(overlay.getWidth()/2),h-(overlay.getHeight()/2));			
 		//bm = compositeBitmap(bm, overlay, mat);	
-		
+		int randomCat = kitties[0];;
+		if(!lotsOfCats){
+			randomCat = kitties[random.nextInt(kitties.length - 1)];
+		}
 		int angle_offset = Math.round((float)360/num);
-		for(int i = Math.round((float)num/1.6f); i < num; i++) {
-			System.out.println("new cat");
-			Matrix mat2 = new Matrix();
-			int x = (int) Math.round(radius*.7 * Math.cos(Math.toRadians(angle_offset * i-190))) + w-(overlay.getWidth()/2);
-			int y = (int) Math.round(radius *1.2* Math.sin(Math.toRadians(angle_offset * i-190))) + h-(overlay.getHeight()/2);
-			mat2.postTranslate(x,y);			
-			overlay = BitmapFactory.decodeResource(this.getResources(),
-					kitties[random.nextInt(kitties.length - 1)]);
-			overlay = getResizedBitmap(overlay, radius/3);
-			bm = compositeBitmap(bm, overlay, mat2);	
+		
+		if(hasBeard){
+			for(int i = Math.round((float)num/1.6f); i < num; i+=1.333) {
+				System.out.println("new cat");
+				Matrix mat2 = new Matrix();
+				int x = (int) Math.round(radius*.7 * Math.cos(Math.toRadians(angle_offset * i-190))) + w-(overlay.getWidth()/2);
+				int y = (int) Math.round(radius *1.2* Math.sin(Math.toRadians(angle_offset * i-190))) + h-(overlay.getHeight()/2);
+				mat2.postTranslate(x,y);
+				if(!lotsOfCats){
+					overlay = BitmapFactory.decodeResource(this.getResources(),
+						randomCat);
+				}else{
+					overlay = BitmapFactory.decodeResource(this.getResources(),
+						kitties[random.nextInt(kitties.length - 1)]);	
+				}
+				overlay = getResizedBitmap(overlay, (int)(radius/2.5));
+				bm = compositeBitmap(bm, overlay, mat2);	
+			}
+		}
+		
+		
+		if(hasHalo){
+			for(int i = 0; i < num; i+=2*3.14/num) {
+				System.out.println("new cat");
+				Matrix mat2 = new Matrix();
+				int x = (int) Math.round(radius* Math.cos(Math.toRadians(angle_offset * i-190))) + w-(overlay.getWidth()/2);
+				int y = (int) Math.round(radius* Math.sin(Math.toRadians(angle_offset * i-190))) + h-(overlay.getHeight()/2);
+				mat2.postTranslate(x,y);
+				if(!lotsOfCats){
+					overlay = BitmapFactory.decodeResource(this.getResources(),
+						randomCat);
+				}else{
+					overlay = BitmapFactory.decodeResource(this.getResources(),
+						kitties[random.nextInt(kitties.length - 1)]);	
+				}
+				overlay = getResizedBitmap(overlay, (int)(radius/2.5));
+				bm = compositeBitmap(bm, overlay, mat2);
+			}
 		}
 		
 		//$y = round($r * cos(deg2rad($angle_offset * $count - 90)) + $r*3, 3);

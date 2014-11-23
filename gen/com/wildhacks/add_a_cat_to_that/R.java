@@ -59,8 +59,9 @@ public final class R {
         public static final int cat_one=0x7f020022;
         public static final int cat_two=0x7f020023;
         public static final int doug_small=0x7f020024;
-        public static final int ic_launcher=0x7f020025;
-        public static final int square_cat=0x7f020026;
+        public static final int empty=0x7f020025;
+        public static final int ic_launcher=0x7f020026;
+        public static final int square_cat=0x7f020027;
     }
     public static final class id {
         public static final int action_settings=0x7f080001;
