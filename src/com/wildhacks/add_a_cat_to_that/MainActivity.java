@@ -94,19 +94,16 @@ public class MainActivity extends Activity {
 					//String imageUri = "drawable://" + R.drawable.cat_above;
 					bitmap = getResizedBitmap(bitmap, 800);
 					
-					ArrayList<Face> butts = HumanFace.getFaces(bitmap);
-					System.out.println("Num faces " + butts.size());
-					PointF p = new PointF();
-					if(butts.size()>0) {
-						Face test = butts.get(0);
-						System.out.println(test.toString());
-
-						test.getMidPoint(p);
-						System.out.println();
-					}
+					ArrayList<Face> hFaces = HumanFace.getFaces(bitmap);
 					
+					System.out.println("num faces " + hFaces.size());
+					PointF p = new PointF();
 					System.out.println("point " + p.x + "," + p.y);
-					bitmap = buildKitties(bitmap, (int)p.x,(int)p.y ,150, 25);
+					for(int i = 0; i < hFaces.size(); i++) {
+						hFaces.get(i).getMidPoint(p);
+						bitmap = buildKitties(bitmap, (int)p.x,(int)p.y ,150, 25);				
+					}
+					//bitmap = buildKitties(bitmap, (int)p.x,(int)p.y ,150, 25);
 					/*
 					Bitmap overlay = BitmapFactory.decodeResource(this.getResources(),
                             R.drawable.cat_one);
@@ -174,23 +171,22 @@ public class MainActivity extends Activity {
 		matrix.postTranslate(h, w);
 		
 		Bitmap overlay = BitmapFactory.decodeResource(this.getResources(),
-                R.drawable.cat_one);
+                R.drawable.c17);
 		overlay = getResizedBitmap(overlay, 75);
-		Matrix mat = new Matrix();
-		mat.postTranslate(w, h);			
-		bm = compositeBitmap(bm, overlay, mat);	
+		//Matrix mat = new Matrix();
+		//mat.postTranslate(w-(overlay.getWidth()/2),h-(overlay.getHeight()/2));			
+		//bm = compositeBitmap(bm, overlay, mat);	
 		
-		/*
 		int angle_offset = Math.round((float)360/num);
-		for(int i = 0; i < num; i++) {
+		for(int i = Math.round((float)num/1.5f); i < num; i++) {
 			System.out.println("new cat");
-			Matrix mat = new Matrix();
-			int x = (int) Math.round(radius * Math.cos(Math.toRadians(angle_offset * i - 90)) + radius *3);
-			int y = (int) Math.round(radius * Math.sin(Math.toRadians(angle_offset * i - 90)) + radius *3);
-			mat.postTranslate(x, y);			
-			bm = compositeBitmap(bm, overlay, mat);	
+			Matrix mat2 = new Matrix();
+			int x = (int) Math.round(radius*.7 * Math.cos(Math.toRadians(angle_offset * i-190))) + w-(overlay.getWidth()/2);
+			int y = (int) Math.round(radius *1.2* Math.sin(Math.toRadians(angle_offset * i-190))) + h-(overlay.getHeight()/2);
+			mat2.postTranslate(x,y);			
+			bm = compositeBitmap(bm, overlay, mat2);	
 		}
-		*/
+		
 		//$y = round($r * cos(deg2rad($angle_offset * $count - 90)) + $r*3, 3);
 		//$x = round($r * sin(deg2rad($angle_offset * $count - 90)) + $r*3, 3);
 		

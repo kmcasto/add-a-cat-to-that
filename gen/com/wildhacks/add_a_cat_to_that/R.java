@@ -22,13 +22,42 @@ public final class R {
         public static final int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
-        public static final int cat_above=0x7f020000;
-        public static final int cat_above_small=0x7f020001;
-        public static final int cat_one=0x7f020002;
-        public static final int cat_two=0x7f020003;
-        public static final int doug_small=0x7f020004;
-        public static final int ic_launcher=0x7f020005;
-        public static final int square_cat=0x7f020006;
+        public static final int c1=0x7f020000;
+        public static final int c10=0x7f020001;
+        public static final int c11=0x7f020002;
+        public static final int c12=0x7f020003;
+        public static final int c13=0x7f020004;
+        public static final int c14=0x7f020005;
+        public static final int c15=0x7f020006;
+        public static final int c16=0x7f020007;
+        public static final int c17=0x7f020008;
+        public static final int c18=0x7f020009;
+        public static final int c19=0x7f02000a;
+        public static final int c2=0x7f02000b;
+        public static final int c20=0x7f02000c;
+        public static final int c21=0x7f02000d;
+        public static final int c22=0x7f02000e;
+        public static final int c23=0x7f02000f;
+        public static final int c24=0x7f020010;
+        public static final int c25=0x7f020011;
+        public static final int c26=0x7f020012;
+        public static final int c27=0x7f020013;
+        public static final int c28=0x7f020014;
+        public static final int c3=0x7f020015;
+        public static final int c4=0x7f020016;
+        public static final int c5=0x7f020017;
+        public static final int c6=0x7f020018;
+        public static final int c7=0x7f020019;
+        public static final int c8=0x7f02001a;
+        public static final int c9=0x7f02001b;
+        public static final int cage=0x7f02001c;
+        public static final int cat_above=0x7f02001d;
+        public static final int cat_above_small=0x7f02001e;
+        public static final int cat_one=0x7f02001f;
+        public static final int cat_two=0x7f020020;
+        public static final int doug_small=0x7f020021;
+        public static final int ic_launcher=0x7f020022;
+        public static final int square_cat=0x7f020023;
     }
     public static final class id {
         public static final int action_settings=0x7f080001;
