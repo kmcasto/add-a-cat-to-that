@@ -3,7 +3,7 @@ package com.wildhacks.add_a_cat_to_that;
 import java.io.File;
 import java.util.ArrayList;
 
-import com.wildhacks.add_a_cat_to_that.models.HumanFace;
+
 import com.wildhacks.add_a_cat_to_that.util.CapturePhotoUtils;
 
 import android.app.Activity;
