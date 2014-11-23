@@ -87,17 +87,23 @@ public class MainActivity extends Activity {
 					System.out.println("build image");
 					bitmap = android.provider.MediaStore.Images.Media
 							.getBitmap(cr, selectedImage);
+					bitmap = CapturePhotoUtils.convertToMutable(bitmap);
 					//String imageUri = "drawable://" + R.drawable.cat_above;
 					bitmap = getResizedBitmap(bitmap, 800);
+					bitmap = buildKitties(bitmap, 75, 75, 150, 25);
+					/*
 					Bitmap overlay = BitmapFactory.decodeResource(this.getResources(),
-                            R.drawable.square_cat);
+                            R.drawable.cat_one);
+					overlay = getResizedBitmap(overlay, 150);
 					bitmap = compositeBitmap(bitmap, overlay);	
-					
+					*/
 					// hacky remove later
+					/*
 					Bitmap test = BitmapFactory.decodeResource(this.getResources(),
                             R.drawable.doug_small);
 					ArrayList<Face> faceList = HumanFace.getFace(test);
 					System.out.println("Facelist " + faceList.size());
+					*/
 					//faceList.get(0).
 					
 					/* (ContentResolver cr, 
@@ -131,7 +137,8 @@ public class MainActivity extends Activity {
 		return resizedBitmap;
 	}
 
-	public Bitmap compositeBitmap(Bitmap bm, Bitmap compBm) {
+	public Bitmap compositeBitmap(Bitmap bm, Bitmap compBm, Matrix m) {
+		System.out.println("composite");
 		Bitmap tempBitmap = bm;
 		Bitmap overlay = compBm;
 
@@ -139,12 +146,36 @@ public class MainActivity extends Activity {
 				tempBitmap.getHeight(), tempBitmap.getConfig());
 
 		Canvas canvas = new Canvas(finalBitmap);
-		Matrix matrix = new Matrix();
-		matrix.postTranslate(40, 0);
-		canvas.drawBitmap(overlay, new Matrix(), null);
 		canvas.drawBitmap(tempBitmap, new Matrix(), null);
-		matrix.postTranslate(-40, 0);
-		canvas.drawBitmap(overlay, new Matrix(), null);
+		canvas.drawBitmap(overlay, m, null);
 		return finalBitmap;
 	}
+	
+	// eheheheh
+	public Bitmap buildKitties(Bitmap bm, int h, int w, int radius, int num) {
+		Matrix matrix = new Matrix();
+		// Move the matrix to the middle
+		matrix.postTranslate(h+radius, w);
+		
+		Bitmap overlay = BitmapFactory.decodeResource(this.getResources(),
+                R.drawable.cat_one);
+		overlay = getResizedBitmap(overlay, 75);
+		
+		
+		int angle_offset = Math.round((float)360/num);
+		for(int i = 0; i < num; i++) {
+			System.out.println("new cat");
+			Matrix mat = new Matrix();
+			int x = (int) Math.round(radius * Math.cos(Math.toRadians(angle_offset * i - 90)) + radius *3);
+			int y = (int) Math.round(radius * Math.sin(Math.toRadians(angle_offset * i - 90)) + radius *3);
+			mat.postTranslate(x, y);			
+			bm = compositeBitmap(bm, overlay, mat);	
+		}
+		
+		//$y = round($r * cos(deg2rad($angle_offset * $count - 90)) + $r*3, 3);
+		//$x = round($r * sin(deg2rad($angle_offset * $count - 90)) + $r*3, 3);
+		
+		return bm;
+	}
+	
 }
