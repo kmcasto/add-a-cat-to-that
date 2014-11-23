@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 
+import com.wildhacks.add_a_cat_to_that.model.HumanFace;
 import com.wildhacks.add_a_cat_to_that.util.CapturePhotoUtils;
 
 import android.app.Activity;
@@ -13,6 +14,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Point;
+import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.media.FaceDetector.Face;
 import android.net.Uri;
@@ -90,7 +93,20 @@ public class MainActivity extends Activity {
 					bitmap = CapturePhotoUtils.convertToMutable(bitmap);
 					//String imageUri = "drawable://" + R.drawable.cat_above;
 					bitmap = getResizedBitmap(bitmap, 800);
-					bitmap = buildKitties(bitmap, 75, 75, 150, 25);
+					
+					ArrayList<Face> butts = HumanFace.getFaces(bitmap);
+					System.out.println("Num faces " + butts.size());
+					PointF p = new PointF();
+					if(butts.size()>0) {
+						Face test = butts.get(0);
+						System.out.println(test.toString());
+
+						test.getMidPoint(p);
+						System.out.println();
+					}
+					
+					System.out.println("point " + p.x + "," + p.y);
+					bitmap = buildKitties(bitmap, (int)p.x,(int)p.y ,150, 25);
 					/*
 					Bitmap overlay = BitmapFactory.decodeResource(this.getResources(),
                             R.drawable.cat_one);
@@ -152,16 +168,19 @@ public class MainActivity extends Activity {
 	}
 	
 	// eheheheh
-	public Bitmap buildKitties(Bitmap bm, int h, int w, int radius, int num) {
+	public Bitmap buildKitties(Bitmap bm, int w, int h, int radius, int num) {
 		Matrix matrix = new Matrix();
 		// Move the matrix to the middle
-		matrix.postTranslate(h+radius, w);
+		matrix.postTranslate(h, w);
 		
 		Bitmap overlay = BitmapFactory.decodeResource(this.getResources(),
                 R.drawable.cat_one);
 		overlay = getResizedBitmap(overlay, 75);
+		Matrix mat = new Matrix();
+		mat.postTranslate(w, h);			
+		bm = compositeBitmap(bm, overlay, mat);	
 		
-		
+		/*
 		int angle_offset = Math.round((float)360/num);
 		for(int i = 0; i < num; i++) {
 			System.out.println("new cat");
@@ -171,7 +190,7 @@ public class MainActivity extends Activity {
 			mat.postTranslate(x, y);			
 			bm = compositeBitmap(bm, overlay, mat);	
 		}
-		
+		*/
 		//$y = round($r * cos(deg2rad($angle_offset * $count - 90)) + $r*3, 3);
 		//$x = round($r * sin(deg2rad($angle_offset * $count - 90)) + $r*3, 3);
 		
