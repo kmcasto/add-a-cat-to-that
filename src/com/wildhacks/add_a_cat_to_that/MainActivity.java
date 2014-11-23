@@ -139,8 +139,11 @@ public class MainActivity extends Activity {
 				tempBitmap.getHeight(), tempBitmap.getConfig());
 
 		Canvas canvas = new Canvas(finalBitmap);
-
+		Matrix matrix = new Matrix();
+		matrix.postTranslate(40, 0);
+		canvas.drawBitmap(overlay, new Matrix(), null);
 		canvas.drawBitmap(tempBitmap, new Matrix(), null);
+		matrix.postTranslate(-40, 0);
 		canvas.drawBitmap(overlay, new Matrix(), null);
 		return finalBitmap;
 	}
