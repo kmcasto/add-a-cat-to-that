@@ -17,7 +17,10 @@ public class HumanFace {
 		Face[] faces = new Face[MAX_FACES];
 		FaceDetector fd = new FaceDetector(bmp.getWidth(),bmp.getHeight(),MAX_FACES);
 		int numOfFaces = fd.findFaces(fixSize(bmp),faces);
-		ArrayList<Face> faceList = new ArrayList<Face>(Arrays.asList(faces));
+		ArrayList<Face> faceList = new ArrayList<Face>();
+		for(int i =0; i<numOfFaces; i++){
+			faceList.add(faces[i]);
+		}
 		return faceList;
 	}
 	private Bitmap fixSize(Bitmap bmp){
