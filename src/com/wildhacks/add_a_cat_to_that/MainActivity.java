@@ -2,6 +2,7 @@ package com.wildhacks.add_a_cat_to_that;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Random;
 
 
 import com.wildhacks.add_a_cat_to_that.model.HumanFace;
@@ -101,7 +102,7 @@ public class MainActivity extends Activity {
 					System.out.println("point " + p.x + "," + p.y);
 					for(int i = 0; i < hFaces.size(); i++) {
 						hFaces.get(i).getMidPoint(p);
-						bitmap = buildKitties(bitmap, (int)p.x,(int)p.y ,150, 25);				
+						bitmap = buildKitties(bitmap, (int)p.x,(int)p.y ,150, 70);				
 					}
 					//bitmap = buildKitties(bitmap, (int)p.x,(int)p.y ,150, 25);
 					/*
@@ -166,6 +167,10 @@ public class MainActivity extends Activity {
 	
 	// eheheheh
 	public Bitmap buildKitties(Bitmap bm, int w, int h, int radius, int num) {
+		int kitties[] = primeKitties();
+		
+		Random random = new Random(System.currentTimeMillis());
+		
 		Matrix matrix = new Matrix();
 		// Move the matrix to the middle
 		matrix.postTranslate(h, w);
@@ -178,12 +183,15 @@ public class MainActivity extends Activity {
 		//bm = compositeBitmap(bm, overlay, mat);	
 		
 		int angle_offset = Math.round((float)360/num);
-		for(int i = Math.round((float)num/1.5f); i < num; i++) {
+		for(int i = Math.round((float)num/1.6f); i < num; i++) {
 			System.out.println("new cat");
 			Matrix mat2 = new Matrix();
 			int x = (int) Math.round(radius*.7 * Math.cos(Math.toRadians(angle_offset * i-190))) + w-(overlay.getWidth()/2);
 			int y = (int) Math.round(radius *1.2* Math.sin(Math.toRadians(angle_offset * i-190))) + h-(overlay.getHeight()/2);
 			mat2.postTranslate(x,y);			
+			overlay = BitmapFactory.decodeResource(this.getResources(),
+					kitties[random.nextInt(kitties.length - 1)]);
+			overlay = getResizedBitmap(overlay, 75);
 			bm = compositeBitmap(bm, overlay, mat2);	
 		}
 		
@@ -191,6 +199,28 @@ public class MainActivity extends Activity {
 		//$x = round($r * sin(deg2rad($angle_offset * $count - 90)) + $r*3, 3);
 		
 		return bm;
+	}
+	
+	public int[] primeKitties() {
+		int[] images = {
+			    R.drawable.c1, R.drawable.c2,
+			    R.drawable.c3, R.drawable.c4,
+			    R.drawable.c5, R.drawable.c6,
+			    /*R.drawable.c7,*/ R.drawable.c8,
+			    R.drawable.c9, /*R.drawable.c10,*/
+			    R.drawable.c11, R.drawable.c12,
+			    R.drawable.c13, /*R.drawable.c14,*/
+			    R.drawable.c15, R.drawable.c16,
+			    R.drawable.c17, R.drawable.c18,
+			    R.drawable.c19, R.drawable.c20,
+			    R.drawable.c21, R.drawable.c22,
+			    R.drawable.c23, R.drawable.c24,
+			    R.drawable.c25, R.drawable.c26,
+			    R.drawable.c27, R.drawable.c28,
+			    R.drawable.cage
+			    };	
+		
+		return images;
 	}
 	
 }
