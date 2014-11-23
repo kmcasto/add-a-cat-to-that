@@ -1,7 +1,9 @@
 package com.wildhacks.add_a_cat_to_that;
 
 import java.io.File;
+import java.util.ArrayList;
 
+import com.wildhacks.add_a_cat_to_that.models.HumanFace;
 import com.wildhacks.add_a_cat_to_that.util.CapturePhotoUtils;
 
 import android.app.Activity;
@@ -12,6 +14,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
+import android.media.FaceDetector.Face;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -89,7 +92,14 @@ public class MainActivity extends Activity {
 					Bitmap overlay = BitmapFactory.decodeResource(this.getResources(),
                             R.drawable.square_cat);
 					bitmap = compositeBitmap(bitmap, overlay);	
-
+					
+					// hacky remove later
+					Bitmap test = BitmapFactory.decodeResource(this.getResources(),
+                            R.drawable.doug_small);
+					ArrayList<Face> faceList = HumanFace.getFace(test);
+					System.out.println("Facelist " + faceList.size());
+					//faceList.get(0).
+					
 					/* (ContentResolver cr, 
 					Bitmap source, 
 					String title, 
