@@ -1,29 +1,72 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.wildhacks.add_a_cat_to_that.MainActivity" >
 
+    
+
     <Button
+        android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/button5"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:text="Add a cat!" 
+        android:layout_marginLeft="16dp"
         android:onClick="takePicture"
-        />
-    
+        android:text="Add a cat!" />
+
     <ImageView
+        android:id="@+id/imageReturn"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:id="@+id/imageReturn"
-        android:contentDescription=""
-	 />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/button1" />
+
+    <CheckBox
+        android:id="@+id/checkBox1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/button1"
+        android:layout_below="@+id/button1"
+        android:layout_toLeftOf="@+id/imageReturn"
+        android:onClick="setBeard"
+        android:text="Cat Beard" />
+
+    <CheckBox
+        android:id="@+id/checkBox2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/checkBox1"
+        android:layout_below="@+id/checkBox1"
+        android:layout_toLeftOf="@+id/imageReturn"
+        android:onClick="setHalo"
+        android:text="Cat Halo" />
+
+    <CheckBox
+        android:id="@+id/checkBox3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/checkBox2"
+        android:layout_alignRight="@+id/checkBox2"
+        android:layout_below="@+id/checkBox2"
+        android:onClick="setLotsOfCats"
+        android:text="Multi Cat" />
+
+    <CheckBox
+        android:id="@+id/checkBox4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/checkBox3"
+        android:layout_alignRight="@+id/checkBox3"
+        android:layout_below="@+id/checkBox3"
+        android:onClick="setCage"
+        android:text="Cage" />
 
 </RelativeLayout>

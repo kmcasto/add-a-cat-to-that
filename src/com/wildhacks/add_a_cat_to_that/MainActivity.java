@@ -33,7 +33,24 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
 	private static final int TAKE_PICTURE = 0;
 	protected Uri imageUri;
-
+	boolean lotsOfCats=false;
+	boolean hasBeard=false;
+	boolean hasHalo=false;
+	boolean hasCage=false;
+	
+	public void setLotsOfCats(View view){
+		lotsOfCats=!lotsOfCats;
+	}
+	public void setBeard(View view){
+		hasBeard=!hasBeard;
+	}
+	public void setHalo(View view){
+		hasHalo=!hasHalo;
+	}
+	public void setCage(View view){
+		hasCage=!hasCage;
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -99,10 +116,7 @@ public class MainActivity extends Activity {
 					ArrayList<Face> hFaces = HumanFace.getFaces(bitmap);
 					
 					
-					boolean lotsOfCats=true;
-					boolean hasBeard=true;
-					boolean hasHalo=false;
-					boolean hasCage=true;
+					
 					
 					
 					
