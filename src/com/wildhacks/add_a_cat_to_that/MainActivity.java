@@ -125,7 +125,7 @@ public class MainActivity extends Activity {
 					String title, 
 					String description) {
 					*/
-					CapturePhotoUtils.insertImage(cr, bitmap, "cat cat", "cat cat cat cat");
+					CapturePhotoUtils.insertImage(cr, bitmap, "cat_beard_" + System.currentTimeMillis(), "cat cat cat cat");
 					imageView.setImageBitmap(bitmap);
 					Toast.makeText(this, selectedImage.toString(),
 							Toast.LENGTH_LONG).show();
