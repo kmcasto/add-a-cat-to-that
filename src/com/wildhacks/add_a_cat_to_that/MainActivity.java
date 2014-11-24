@@ -131,27 +131,6 @@ public class MainActivity extends Activity {
 						bitmap = buildKitties(bitmap, (int)p.x,(int)p.y , (int)(1.7*hFaces.get(i).eyesDistance()) ,35, lotsOfCats ,hasBeard, hasHalo);
 					}
 					
-					//bitmap = buildKitties(bitmap, (int)p.x,(int)p.y ,150, 25);
-					/*
-					Bitmap overlay = BitmapFactory.decodeResource(this.getResources(),
-                            R.drawable.cat_one);
-					overlay = getResizedBitmap(overlay, 150);
-					bitmap = compositeBitmap(bitmap, overlay);	
-					*/
-					// hacky remove later
-					/*
-					Bitmap test = BitmapFactory.decodeResource(this.getResources(),
-                            R.drawable.doug_small);
-					ArrayList<Face> faceList = HumanFace.getFace(t est);
-					System.out.println("Facelist " + faceList.size());
-					*/
-					//faceList.get(0).
-					
-					/* (ContentResolver cr, 
-					Bitmap source, 
-					String title, 
-					String description) {
-					*/
 					CapturePhotoUtils.insertImage(cr, bitmap, "cat_beard_" + System.currentTimeMillis(), "cat cat cat cat");
 					imageView.setImageBitmap(bitmap);
 					Toast.makeText(this, selectedImage.toString(),
@@ -204,36 +183,16 @@ public class MainActivity extends Activity {
 		
 		Bitmap overlay = BitmapFactory.decodeResource(this.getResources(),
                 R.drawable.cage2);
-		
-		
-		//PointF p = new PointF();
-		//ArrayList<Face> hFaces = HumanFace.getFaces(overlay);
-		//hFaces.get(0).getMidPoint(p);
-		
-		System.out.print("e " + e);
+
 		//overlay = getResizedBitmap(overlay, (int)(1.1*e/hFaces.get(0).eyesDistance()));
 		overlay = getResizedBitmap(overlay, (int)(3.2*(int)e));
 		
-		//Matrix mat = new Matrix();
-		//mat.postTranslate(w-(overlay.getWidth()/2),h-(overlay.getHeight()/2));			
-		//bm = compositeBitmap(bm, overlay, mat);	
-		
-		System.out.println("new cage");
 		Matrix mat2 = new Matrix();
 		int x =  w-(overlay.getWidth()/2);
 		int y =  h-(overlay.getHeight()/2);
 		mat2.postTranslate(x,y);
-		//mat2.setScale(1, );
-		//overlay = BitmapFactory.decodeResource(this.getResources(),
-				//kitties[kitties.length - 1]);
-		//overlay = getResizedBitmap(overlay, 75);
-		//overlay = Bitmap.createScaledBitmap(overlay, w, h, true);
 		bm = compositeBitmap(bm, overlay, mat2);	
-		
-		
-		//$y = round($r * cos(deg2rad($angle_offset * $count - 90)) + $r*3, 3);
-		//$x = round($r * sin(deg2rad($angle_offset * $count - 90)) + $r*3, 3);
-		
+
 		return bm;
 	}
 	
@@ -250,9 +209,7 @@ public class MainActivity extends Activity {
 		Bitmap overlay = BitmapFactory.decodeResource(this.getResources(),
                 R.drawable.empty);
 		overlay = getResizedBitmap(overlay, 75);
-		//Matrix mat = new Matrix();
-		//mat.postTranslate(w-(overlay.getWidth()/2),h-(overlay.getHeight()/2));			
-		//bm = compositeBitmap(bm, overlay, mat);	
+	
 		int randomCat = kitties[0];;
 		if(!lotsOfCats){
 			randomCat = kitties[random.nextInt(kitties.length - 1)];
@@ -262,7 +219,7 @@ public class MainActivity extends Activity {
 		if(hasBeard){
 			
 			for(int i = (int) (num/1.6f)+1; i < num; i+=1.7) {
-				System.out.println("new cat");
+				//System.out.println("new cat");
 				Matrix mat2 = new Matrix();
 				int x = (int) Math.round(radius*.7 * Math.cos(Math.toRadians(angle_offset * i-190))) + w-(overlay.getWidth()/2);
 				int y = (int) Math.round(radius *1.2* Math.sin(Math.toRadians(angle_offset * i-190))) + h-(overlay.getHeight()/2);
@@ -276,7 +233,7 @@ public class MainActivity extends Activity {
 				}
 				overlay = getResizedBitmap(overlay, (int)(radius/1.9));
 				bm = compositeBitmap(bm, overlay, mat2);
-				//bitmap.flush();
+				// flush bitmap ?
 			}
 		}
 		
